@@ -1,6 +1,7 @@
 import streamlit as st
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 from selNdriv import calc_wrkHrs, openEsign, gotoTimeSheetEsign, entryTimeSheetEsign
 def main():
     out_string4 = ""
@@ -39,9 +40,13 @@ def main():
 
             #if st.button("Submit"):
             l_url = 'https://citycollegesf.na1.echosign.com/'
+            gChromeOptions = webdriver.ChromeOptions()
+            gChromeOptions.add_argument("window-size=1920x1480")
+            gChromeOptions.add_argument("disable-dev-shm-usage")
+
             chrome_options = Options()
             chrome_options.add_experimental_option("detach", True)
-            driver = webdriver.Chrome(options=chrome_options)
+            driver = webdriver.Chrome(options=gChromeOptions, executable_path=ChromeDriverManager().install())
             openEsign(driver, l_url)
             gotoTimeSheetEsign(driver, supEmail)
             entryTimeSheetEsign(driver, f_name, l_name, posn, arrival, lunch_out, lunch_in, depart)
@@ -50,6 +55,7 @@ def main():
         st.write(out_string, unsafe_allow_html=True)
         st.write(out_string2, unsafe_allow_html=True)
         st.write(out_string3)
+        driver.save_screenshot("my_screenshot.png")
 
 if __name__ == '__main__':
     main()
