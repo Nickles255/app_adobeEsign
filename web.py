@@ -52,11 +52,12 @@ def main():
             gotoTimeSheetEsign(driver, supEmail)
             entryTimeSheetEsign(driver, f_name, l_name, posn, arrival, lunch_out, lunch_in, depart)
 
+            driver.save_screenshot("my_screenshot.png")
+
         st.write(out_string4)
         st.write(out_string, unsafe_allow_html=True)
         st.write(out_string2, unsafe_allow_html=True)
         st.write(out_string3)
-        driver.save_screenshot("my_screenshot.png")
 
 if __name__ == '__main__':
     main()
