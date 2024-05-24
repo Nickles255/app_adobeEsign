@@ -1,6 +1,7 @@
 import streamlit as st
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selNdriv import calc_wrkHrs, openEsign, gotoTimeSheetEsign, entryTimeSheetEsign
 def main():
@@ -46,7 +47,7 @@ def main():
 
             chrome_options = Options()
             chrome_options.add_experimental_option("detach", True)
-            driver = webdriver.Chrome(options=gChromeOptions, executable_path=ChromeDriverManager().install())
+            driver = webdriver.Chrome(options=gChromeOptions, service=Service(ChromeDriverManager().install()))
             openEsign(driver, l_url)
             gotoTimeSheetEsign(driver, supEmail)
             entryTimeSheetEsign(driver, f_name, l_name, posn, arrival, lunch_out, lunch_in, depart)
